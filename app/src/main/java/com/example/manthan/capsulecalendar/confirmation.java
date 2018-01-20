@@ -24,6 +24,7 @@ public class confirmation extends AppCompatActivity {
     private  static  Integer DOSES_PER_DAY = 0;
     private  static String DAYS_REPEAT = "0";
     private  static String NUM_PILLS = "0";
+    private static String medName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,9 @@ public class confirmation extends AppCompatActivity {
         setContentView(R.layout.activity_confirmation);
 
         String text = getIntent().getStringExtra("MedicationText");
-        String formattedText = text.trim().replaceAll("\\s{2,}", " ");
+        String text2 = text.trim().replaceAll("\\s{2,}", " ");
+        String formattedText = text2.replaceAll("\\.", "");
+
         Log.d(TAG, formattedText);
         String[] words = formattedText.split("\\s+");
 
@@ -63,6 +66,13 @@ public class confirmation extends AppCompatActivity {
             }
         }
 
+        String med = "";
+        int indexMG = Arrays.asList(words).indexOf("MG");
+        if (indexMG != -1) {
+            medName = " of " + words[indexMG - 2];
+            med = words[indexMG - 2];
+        }
+
     /*
         String refills = "Could not find number of doses per day";
         int indexNO = Arrays.asList(words).indexOf("NO");
@@ -77,14 +87,15 @@ public class confirmation extends AppCompatActivity {
             refills = words[index +1];
         }
 */
-        TextView medicationText = (TextView) findViewById(R.id.medicationText);
-        medicationText.setText(formattedText);
 
         EditText perDose = (EditText) findViewById(R.id.perDose);
         perDose.setText(perDosage, TextView.BufferType.EDITABLE);
 
         EditText perDay = (EditText) findViewById(R.id.perDay);
         perDay.setText(per_day, TextView.BufferType.EDITABLE);
+
+        EditText medicineName = (EditText) findViewById(R.id.medicineName);
+        medicineName.setText(med, TextView.BufferType.EDITABLE);
 
         if(perDosage.equals("ONE")||perDosage.equals("1")){
             PER_DOSAGE = 1;
@@ -128,6 +139,7 @@ public class confirmation extends AppCompatActivity {
        Long beginMilli = beginTime.getTimeInMillis();
 
         String RRULE = "";
+        String desc = String.format("Take %s tablets", NUM_PILLS) + medName;
 
        if(DOSES_PER_DAY == 1){
            Long endMilli = (beginMilli+600000);
@@ -138,7 +150,7 @@ public class confirmation extends AppCompatActivity {
                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME ,endMilli)
                    .putExtra(Events.TITLE, "Medications reminder")
                    .putExtra(Events.RRULE,RRULE)
-                   .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
+                   .putExtra(Events.DESCRIPTION, desc)
                    .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
            startActivity(intent);
        }
@@ -148,7 +160,7 @@ public class confirmation extends AppCompatActivity {
                    .setData(Events.CONTENT_URI)
                    .putExtra(Events.TITLE, "Medications reminder")
                    .putExtra(Events.RRULE,RRULE)
-                   .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
+                   .putExtra(Events.DESCRIPTION, desc)
                    .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
            startActivity(intent);
        }
@@ -158,7 +170,7 @@ public class confirmation extends AppCompatActivity {
                    .setData(Events.CONTENT_URI)
                    .putExtra(Events.TITLE, "Medications reminder")
                    .putExtra(Events.RRULE,RRULE)
-                   .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
+                   .putExtra(Events.DESCRIPTION, desc)
                    .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
            startActivity(intent);
        }

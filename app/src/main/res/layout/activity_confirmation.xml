@@ -35,13 +35,27 @@
         android:textSize="26dp"
         android:layout_below="@id/perDoseLabel"
         android:text="Doses per day:"
-        android:id="@+id/perDayLabel" />
+        android:id="@+id/perDayLabel"
+        android:layout_marginBottom="40dp"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/perDoseLabel"
         android:layout_toRightOf="@id/perDayLabel"
         android:id="@+id/perDay" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:layout_below="@id/perDayLabel"
+        android:text="Medication name:"
+        android:id="@+id/medicineLabel" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/perDayLabel"
+        android:layout_toRightOf="@id/perDayLabel"
+        android:id="@+id/medicineName" />
 
     <Button
         android:id="@+id/camera_button"
