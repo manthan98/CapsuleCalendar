@@ -62,6 +62,18 @@ public class confirmation extends AppCompatActivity {
             }
         }
 
+        String refills = "Could not find number of doses per day";
+        int indexNO = Arrays.asList(words).indexOf("NO");
+        int indexRefill = Arrays.asList(words).indexOf("REFILL");
+        int indexRefill2 = Arrays.asList(words).indexOf("REFILL:");
+        if(indexNO != -1){
+            if(words[indexNO + 1]=="REFILL"){
+                refills = "NONE";
+            }
+        }
+        else if(indexRefill2 != -1||indexRefill != -1){
+            refills = words[index +1];
+        }
 
         TextView medicationText = (TextView) findViewById(R.id.medicationText);
         medicationText.setText(formattedText);
@@ -86,15 +98,16 @@ public class confirmation extends AppCompatActivity {
             return;
         }
 
+
         Intent intent = new Intent(Intent.ACTION_INSERT)
                 .setData(Events.CONTENT_URI)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
                 .putExtra(Events.TITLE, "Medications reminder")
                 .putExtra(Events.DESCRIPTION, "Take your medicine fam")
-                .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+                .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName())
+                .putExtra(Events.RRULE,"FREQ=DAILY;COUNT= NUMMMMMMM(REPLACE)));WKST=SU");
         startActivity(intent);
-
 
 
     }
