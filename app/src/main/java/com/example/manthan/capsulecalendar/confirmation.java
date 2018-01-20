@@ -20,8 +20,10 @@ import java.util.TimeZone;
 public class confirmation extends AppCompatActivity {
 
     private static final String TAG = "confirmationActivity";
-    private  static String PER_DOSAGE = "0";
+    private  static Integer PER_DOSAGE = 0;
     private  static  Integer DOSES_PER_DAY = 0;
+    private  static String DAYS_REPEAT = "0";
+    private  static String NUM_PILLS = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class confirmation extends AppCompatActivity {
         int indexDaily = Arrays.asList(words).indexOf("DAILY");
         int indexDay = Arrays.asList(words).indexOf("DAY");
         if (indexDaily != -1) {
-            if (words[indexDaily - 1] == "TIMES") {
+            if (words[indexDaily - 1].equals("TIMES")) {
                 per_day = words[indexDaily - 2];
             } else if (Arrays.asList(numbers).indexOf(words[indexDaily - 1]) != -1) {
                 per_day = words[indexDaily - 1];
@@ -54,14 +56,27 @@ public class confirmation extends AppCompatActivity {
                 per_day = "ONE";
             }
         } else if (indexDay != -1) {
-            if (words[indexDay - 1] == "A" || words[indexDaily - 1] == "PER") {
+            if (words[indexDay - 1].equals( "A" )|| words[indexDaily - 1].equals("PER") ) {
                 per_day = words[indexDay - 2];
-            } else if (words[indexDay - 1] == "EACH" || words[indexDaily - 1] == "EVERY") {
+            } else if (words[indexDay - 1].equals("EACH") || words[indexDaily - 1].equals("EVERY") ) {
                 per_day = "ONE";
             }
         }
 
-
+    /*
+        String refills = "Could not find number of doses per day";
+        int indexNO = Arrays.asList(words).indexOf("NO");
+        int indexRefill = Arrays.asList(words).indexOf("REFILL");
+        int indexRefill2 = Arrays.asList(words).indexOf("REFILL:");
+        if(indexNO != -1){
+            if(words[indexNO + 1]=="REFILL"){
+                refills = "NONE";
+            }
+        }
+        else if(indexRefill2 != -1||indexRefill != -1){
+            refills = words[index +1];
+        }
+*/
         TextView medicationText = (TextView) findViewById(R.id.medicationText);
         medicationText.setText(formattedText);
 
@@ -71,7 +86,17 @@ public class confirmation extends AppCompatActivity {
         EditText perDay = (EditText) findViewById(R.id.perDay);
         perDay.setText(per_day, TextView.BufferType.EDITABLE);
 
-        PER_DOSAGE = perDosage;
+        if(perDosage.equals("ONE")||perDosage.equals("1")){
+            PER_DOSAGE = 1;
+        }
+        else if(perDosage.equals("TWO") || perDosage.equals("2")){
+            PER_DOSAGE = 2;
+        }
+        else if(perDosage.equals("THREE") || perDosage.equals("3")){
+            PER_DOSAGE = 3;
+
+        }
+
         DOSES_PER_DAY = 1;
         if(per_day.equals("TWO") || per_day.equals("TWICE")){
             DOSES_PER_DAY = 2;
@@ -79,25 +104,65 @@ public class confirmation extends AppCompatActivity {
         else if(per_day.equals("THREE") || per_day.equals("THRICE")){
             DOSES_PER_DAY = 3;
         }
+
+        NUM_PILLS = perDosage;
+
+        int count = 30/(PER_DOSAGE);
+        DAYS_REPEAT = String.valueOf(count);
     }
 
     public void syncCalendarClick(View v) {
-        Long beginTime = Calendar.getInstance().getTimeInMillis();
-        Long endTime = beginTime + 600000;
+
+
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Need write calendar permission", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
-                .putExtra(Events.TITLE, "Medications reminder")
-                .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", PER_DOSAGE))
-                .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
-        startActivity(intent);
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(Calendar.HOUR_OF_DAY, 9);
+        beginTime.set(Calendar.MINUTE, 0);
+       int dayOfMonth = beginTime.get(Calendar.DAY_OF_MONTH)+1;
+       beginTime.set(Calendar.DAY_OF_MONTH, dayOfMonth );
+       Long beginMilli = beginTime.getTimeInMillis();
+
+        String RRULE = "";
+
+       if(DOSES_PER_DAY == 1){
+           Long endMilli = (beginMilli+600000);
+           RRULE = String.format("FREQ=DAILY;COUNT=%s", DAYS_REPEAT);
+           Intent intent = new Intent(Intent.ACTION_INSERT)
+                   .setData(Events.CONTENT_URI)
+                   .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME , beginMilli)
+                   .putExtra(CalendarContract.EXTRA_EVENT_END_TIME ,endMilli)
+                   .putExtra(Events.TITLE, "Medications reminder")
+                   .putExtra(Events.RRULE,RRULE)
+                   .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
+                   .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+           startActivity(intent);
+       }
+       else if(DOSES_PER_DAY == 2){
+           RRULE = String.format("FREQ=HOURLY;BYHOUR=9,19;COUNT=%s", DAYS_REPEAT);
+           Intent intent = new Intent(Intent.ACTION_INSERT)
+                   .setData(Events.CONTENT_URI)
+                   .putExtra(Events.TITLE, "Medications reminder")
+                   .putExtra(Events.RRULE,RRULE)
+                   .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
+                   .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+           startActivity(intent);
+       }
+       else if(DOSES_PER_DAY == 3){
+           RRULE = String.format("FREQ=HOURLY;BYHOUR=9,12,19;COUNT=%s", DAYS_REPEAT);
+           Intent intent = new Intent(Intent.ACTION_INSERT)
+                   .setData(Events.CONTENT_URI)
+                   .putExtra(Events.TITLE, "Medications reminder")
+                   .putExtra(Events.RRULE,RRULE)
+                   .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
+                   .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+           startActivity(intent);
+       }
+
     }
 
 }
