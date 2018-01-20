@@ -27,7 +27,6 @@ public class homeScreen extends AppCompatActivity {
     public void calendarClick(View v){
         Calendar cal = new GregorianCalendar();
         cal.setTime(new Date());
-        cal.add(Calendar.MONTH, 2);
         long time = cal.getTime().getTime();
         Uri.Builder builder =
                 CalendarContract.CONTENT_URI.buildUpon();
