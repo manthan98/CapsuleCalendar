@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
                 Intent i;
                 i = new Intent(this, homeScreen.class);
+                i.putExtra("credential", idTokenString);
                 startActivity(i);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -117,7 +118,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    String idTokenString = "";
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
+        // Save this JWT in global String :
+        idTokenString = acct.getIdToken();
+
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

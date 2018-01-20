@@ -54,6 +54,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     // Helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
+    String JWToken = "";
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -62,6 +63,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.ocr_capture);
+        JWToken = getIntent().getStringExtra("credential");
 
 
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
@@ -309,7 +311,10 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             if (text != null && text.getValue() != null) {
                 Log.d(TAG, text.getValue());
                 Intent confirmation = new Intent (this, confirmation.class);
-                confirmation.putExtra("MedicationText", text.getValue());
+                Bundle extras = new Bundle();
+                extras.putString("MedicationText", text.getValue());
+                extras.putString("credential", JWToken);
+                confirmation.putExtras(extras);
                 startActivity(confirmation);
             }
             else {

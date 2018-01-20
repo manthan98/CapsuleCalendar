@@ -13,14 +13,18 @@ import java.util.Date;
 
 public class homeScreen extends AppCompatActivity {
 
+    String JWToken = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        JWToken = getIntent().getStringExtra("credential");
     }
 
     public void cameraClick(View v){
         Intent i = new Intent(this, OcrCaptureActivity.class);
+        i.putExtra("credential", JWToken);
         startActivity(i);
     }
 
