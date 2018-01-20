@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +8,39 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textSize="26dp"
-        android:id="@+id/medicationText"/>
+        android:id="@+id/medicationText"
+        android:layout_marginBottom="40dp"/>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:layout_below="@id/medicationText"
+        android:text="Tablets per dose:"
+        android:id="@+id/perDoseLabel"
+        android:layout_marginBottom="40dp"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/medicationText"
+        android:layout_toRightOf="@id/perDoseLabel"
+        android:id="@+id/perDose" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:layout_below="@id/perDoseLabel"
+        android:text="Doses per day:"
+        android:id="@+id/perDayLabel" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/perDoseLabel"
+        android:layout_toRightOf="@id/perDayLabel"
+        android:id="@+id/perDay" />
+
+
+</RelativeLayout>
