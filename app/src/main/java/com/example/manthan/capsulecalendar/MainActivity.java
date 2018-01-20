@@ -88,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        Intent i;
-        i = new Intent(this, homeScreen.class);
-        startActivity(i);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 
