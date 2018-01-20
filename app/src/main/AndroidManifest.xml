@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".camera" />
-        <activity android:name=".homeScreen"></activity>
+        <activity android:name=".homeScreen" />
+        <activity android:name=".OcrCaptureActivity" />
+        <activity android:name=".OcrGraphic" />
+        <activity android:name=".OcrDetectorProcessor"></activity>
     </application>
 
 </manifest>

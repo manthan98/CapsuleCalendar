@@ -14,7 +14,7 @@ public class homeScreen extends AppCompatActivity {
     }
 
     public void cameraClick(View v){
-        Intent i = new Intent(this, camera.class);
+        Intent i = new Intent(this, OcrCaptureActivity.class);
         startActivity(i);
     }
 
