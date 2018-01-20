@@ -7,11 +7,9 @@ import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     private final Object mLock = new Object();
@@ -134,7 +132,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
      */
     public T getGraphicAtLocation(float rawX, float rawY) {
         synchronized (mLock) {
-            // Get the position of this View so the raw location can be offset relative to the view.
+            // Get the position of this View so the raw location can be offset relative to the view.f
             int[] location = new int[2];
             this.getLocationOnScreen(location);
             for (T graphic : mGraphics) {
@@ -143,6 +141,17 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
                 }
             }
             return null;
+        }
+    }
+
+    public ArrayList<T> getGraphics() {
+        synchronized (mLock) {
+            // Get the position of this View so the raw location can be offset relative to the view.
+            ArrayList<T> graphicArray = new ArrayList<T>();
+            for (T graphic : mGraphics) {
+                graphicArray.add(graphic);
+            }
+            return graphicArray;
         }
     }
 

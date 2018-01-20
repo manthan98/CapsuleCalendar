@@ -13,9 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -23,9 +20,10 @@ import java.util.TimeZone;
 public class confirmation extends AppCompatActivity {
 
     private static final String TAG = "confirmationActivity";
-    private  static String PER_DOSAGE = "0";
+    private  static Integer PER_DOSAGE = 0;
     private  static  Integer DOSES_PER_DAY = 0;
     private  static String DAYS_REPEAT = "0";
+    private  static String NUM_PILLS = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class confirmation extends AppCompatActivity {
         int indexDaily = Arrays.asList(words).indexOf("DAILY");
         int indexDay = Arrays.asList(words).indexOf("DAY");
         if (indexDaily != -1) {
-            if (words[indexDaily - 1] == "TIMES") {
+            if (words[indexDaily - 1].equals("TIMES")) {
                 per_day = words[indexDaily - 2];
             } else if (Arrays.asList(numbers).indexOf(words[indexDaily - 1]) != -1) {
                 per_day = words[indexDaily - 1];
@@ -58,9 +56,9 @@ public class confirmation extends AppCompatActivity {
                 per_day = "ONE";
             }
         } else if (indexDay != -1) {
-            if (words[indexDay - 1] == "A" || words[indexDaily - 1] == "PER") {
+            if (words[indexDay - 1].equals( "A" )|| words[indexDaily - 1].equals("PER") ) {
                 per_day = words[indexDay - 2];
-            } else if (words[indexDay - 1] == "EACH" || words[indexDaily - 1] == "EVERY") {
+            } else if (words[indexDay - 1].equals("EACH") || words[indexDaily - 1].equals("EVERY") ) {
                 per_day = "ONE";
             }
         }
@@ -88,12 +86,28 @@ public class confirmation extends AppCompatActivity {
         EditText perDay = (EditText) findViewById(R.id.perDay);
         perDay.setText(per_day, TextView.BufferType.EDITABLE);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(perDosage.equals("ONE")||perDosage.equals("1")){
+            PER_DOSAGE = 1;
+        }
+        else if(perDosage.equals("TWO") || perDosage.equals("2")){
+            PER_DOSAGE = 2;
+        }
+        else if(perDosage.equals("THREE") || perDosage.equals("3")){
+            PER_DOSAGE = 3;
 
-        PER_DOSAGE = perDosage;
-        DOSES_PER_DAY = Integer.parseInt(per_day);
+        }
 
-        int count = 30/(DOSES_PER_DAY*(Integer.parseInt(perDosage)));
+        DOSES_PER_DAY = 1;
+        if(per_day.equals("TWO") || per_day.equals("TWICE")){
+            DOSES_PER_DAY = 2;
+        }
+        else if(per_day.equals("THREE") || per_day.equals("THRICE")){
+            DOSES_PER_DAY = 3;
+        }
+
+        NUM_PILLS = perDosage;
+
+        int count = 30/(DOSES_PER_DAY*(PER_DOSAGE));
         DAYS_REPEAT = String.valueOf(count);
     }
 
@@ -122,7 +136,7 @@ public class confirmation extends AppCompatActivity {
                         .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
                         .putExtra(Events.TITLE, "Medications reminder")
                         .putExtra(Events.RRULE,String.format("FREQ=DAILY;COUNT=%s; WKST=SU", DAYS_REPEAT))
-                        .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", PER_DOSAGE))
+                        .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", NUM_PILLS))
                         .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
                 startActivity(intent);
             }
