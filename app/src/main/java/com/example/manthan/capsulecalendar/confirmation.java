@@ -24,6 +24,7 @@ public class confirmation extends AppCompatActivity {
 
     private static final String TAG = "confirmationActivity";
     private  static String PER_DOSAGE = "0";
+    private  static  Integer DOSES_PER_DAY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class confirmation extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         PER_DOSAGE = perDosage;
+        DOSES_PER_DAY = Integer.parseInt(per_day);
     }
 
     public void syncCalendarClick(View v) {
@@ -95,9 +97,6 @@ public class confirmation extends AppCompatActivity {
                 .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", PER_DOSAGE))
                 .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
         startActivity(intent);
-
-
-
     }
 
 }
