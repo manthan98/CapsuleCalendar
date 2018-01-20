@@ -28,10 +28,10 @@ import com.example.manthan.capsulecalendar.ui.CameraSourcePreview;
 import com.example.manthan.capsulecalendar.ui.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public final class OcrCaptureActivity extends AppCompatActivity {
     private static final String TAG = "OcrCaptureActivity";
@@ -302,24 +302,27 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      * @return true if the tap was on a TextBlock
      */
     private boolean onTap(float rawX, float rawY) {
-        OcrGraphic graphic = mGraphicOverlay.getGraphicAtLocation(rawX, rawY);
-        TextBlock text = null;
-        if (graphic != null) {
-            text = graphic.getTextBlock();
-            if (text != null && text.getValue() != null) {
-                Log.d(TAG, text.getValue());
-                Intent confirmation = new Intent (this, confirmation.class);
-                confirmation.putExtra("MedicationText", text.getValue());
-                startActivity(confirmation);
+        ArrayList<OcrGraphic> graphics = mGraphicOverlay.getGraphics();
+        ArrayList<String> textArray = new ArrayList<>();
+        for(OcrGraphic graphic : graphics){
+            if(graphic.getTextBlock() != null && graphic.getTextBlock().getValue() != null){
+                String text = graphic.getTextBlock().getValue();
+                textArray.add(text);
             }
             else {
                 Log.d(TAG, "text data is null");
             }
         }
-        else {
-            Log.d(TAG,"no text detected");
+        String fullText = "";
+        for(String text : textArray){
+            fullText = fullText + " " + text;
         }
-        return text != null;
+
+        Intent confirmation = new Intent (this, confirmation.class);
+        confirmation.putExtra("MedicationText", fullText);
+        startActivity(confirmation);
+
+        return true;
     }
 
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
