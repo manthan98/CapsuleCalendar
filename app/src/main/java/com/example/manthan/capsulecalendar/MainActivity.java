@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
                 Intent i;
-                i = new Intent(this, camera.class);
+                i = new Intent(this, homeScreen.class);
                 startActivity(i);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
