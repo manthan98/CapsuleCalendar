@@ -23,6 +23,9 @@ import java.util.TimeZone;
 public class confirmation extends AppCompatActivity {
 
     private static final String TAG = "confirmationActivity";
+    private  static String PER_DOSAGE = "0";
+    private  static  Integer DOSES_PER_DAY = 0;
+    private  static String DAYS_REPEAT = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class confirmation extends AppCompatActivity {
             }
         }
 
+    /*
         String refills = "Could not find number of doses per day";
         int indexNO = Arrays.asList(words).indexOf("NO");
         int indexRefill = Arrays.asList(words).indexOf("REFILL");
@@ -74,7 +78,7 @@ public class confirmation extends AppCompatActivity {
         else if(indexRefill2 != -1||indexRefill != -1){
             refills = words[index +1];
         }
-
+*/
         TextView medicationText = (TextView) findViewById(R.id.medicationText);
         medicationText.setText(formattedText);
 
@@ -86,12 +90,16 @@ public class confirmation extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        PER_DOSAGE = perDosage;
+        DOSES_PER_DAY = Integer.parseInt(per_day);
 
+        int count = 30/(DOSES_PER_DAY*(Integer.parseInt(perDosage)));
+        DAYS_REPEAT = String.valueOf(count);
     }
 
     public void syncCalendarClick(View v) {
-        Long beginTime = Calendar.getInstance().getTimeInMillis();
-        Long endTime = beginTime + 600000;
+
+
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Need write calendar permission", Toast.LENGTH_SHORT).show();
@@ -99,16 +107,63 @@ public class confirmation extends AppCompatActivity {
         }
 
 
-        Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
-                .putExtra(Events.TITLE, "Medications reminder")
-                .putExtra(Events.DESCRIPTION, "Take your medicine fam")
-                .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName())
-                .putExtra(Events.RRULE,"FREQ=DAILY;COUNT= NUMMMMMMM(REPLACE)));WKST=SU");
-        startActivity(intent);
+        for(int i = 0; i<DOSES_PER_DAY; i++){
+            if(i==0){
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(Calendar.HOUR_OF_DAY, 9);
+                beginTime.set(Calendar.MINUTE, 0);
 
+                Long beginMilli = beginTime.getTimeInMillis();
+                Long endTime = beginMilli + 600000;
+
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+                        .putExtra(Events.TITLE, "Medications reminder")
+                        .putExtra(Events.RRULE,String.format("FREQ=DAILY;COUNT=%s; WKST=SU", DAYS_REPEAT))
+                        .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", PER_DOSAGE))
+                        .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+                startActivity(intent);
+            }
+            else if(i==1){
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(Calendar.HOUR_OF_DAY, 12);
+                beginTime.set(Calendar.MINUTE, 0);
+
+                Long beginMilli = beginTime.getTimeInMillis();
+                Long endTime = beginMilli + 600000;
+
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+                        .putExtra(Events.TITLE, "Medications reminder")
+                        .putExtra(Events.RRULE,String.format("FREQ=DAILY;COUNT=%s; WKST=SU", DAYS_REPEAT))
+                        .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", PER_DOSAGE))
+                        .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+                startActivity(intent);
+            }
+            else if(i==2){
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(Calendar.HOUR_OF_DAY, 19);
+                beginTime.set(Calendar.MINUTE, 0);
+
+                Long beginMilli = beginTime.getTimeInMillis();
+                Long endTime = beginMilli + 600000;
+
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+                        .putExtra(Events.TITLE, "Medications reminder")
+                        .putExtra(Events.RRULE,String.format("FREQ=DAILY;COUNT=%s; WKST=SU", DAYS_REPEAT))
+                        .putExtra(Events.DESCRIPTION, String.format("Take %s tablets.", PER_DOSAGE))
+                        .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+                startActivity(intent);
+            }
+
+        }
 
     }
 
