@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "843715033823",
+    "firebase_url": "https://capsulecalendar.firebaseio.com",
+    "project_id": "capsulecalendar",
+    "storage_bucket": "capsulecalendar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843715033823:android:ed56a9e6710aacda",
+        "android_client_info": {
+          "package_name": "com.example.manthan.capsulecalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843715033823-e2stfs9qsp5bn2a0c6lp29v5p7b1vflf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.manthan.capsulecalendar",
+            "certificate_hash": "87a8c30816f75732004477849622ba048bb4e45a"
+          }
+        },
+        {
+          "client_id": "843715033823-7ei3r0jf2995mcmt8ortq1qt06m8tulr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTs6pLIPHBrXC-E0owAJFVvmGH__gvarE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843715033823-7ei3r0jf2995mcmt8ortq1qt06m8tulr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
