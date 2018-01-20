@@ -13,9 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -74,10 +71,14 @@ public class confirmation extends AppCompatActivity {
         EditText perDay = (EditText) findViewById(R.id.perDay);
         perDay.setText(per_day, TextView.BufferType.EDITABLE);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         PER_DOSAGE = perDosage;
-        DOSES_PER_DAY = Integer.parseInt(per_day);
+        DOSES_PER_DAY = 1;
+        if(per_day.equals("TWO") || per_day.equals("TWICE")){
+            DOSES_PER_DAY = 2;
+        }
+        else if(per_day.equals("THREE") || per_day.equals("THRICE")){
+            DOSES_PER_DAY = 3;
+        }
     }
 
     public void syncCalendarClick(View v) {
