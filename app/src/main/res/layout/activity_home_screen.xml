@@ -16,6 +16,7 @@
         android:layout_marginBottom="5dp"
         android:text="View full calendar"
         android:textSize="24dp"
+        android:onClick="calendarClick"
         />
     <Button
         android:id="@+id/camera_button"
