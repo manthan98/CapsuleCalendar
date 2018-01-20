@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button signInButton = findViewById(R.id.signInButton);
 
-
         signInButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 signIn();
