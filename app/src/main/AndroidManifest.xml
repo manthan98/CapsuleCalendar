@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.manthan.capsulecalendar">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -20,9 +21,13 @@
         </activity>
         <activity android:name=".camera" />
         <activity android:name=".homeScreen" />
-        <activity android:name=".OcrCaptureActivity" />
         <activity android:name=".OcrGraphic" />
-        <activity android:name=".OcrDetectorProcessor"></activity>
+        <activity android:name=".OcrDetectorProcessor" />
+        <activity android:name=".ui.CameraSource" />
+        <activity android:name=".ui.CameraSourcePreview" />
+        <activity android:name=".ui.GraphicOverlay" />
+        <activity android:name=".OcrCapture" />
+        <activity android:name=".OcrCaptureActivity" />
     </application>
 
 </manifest>

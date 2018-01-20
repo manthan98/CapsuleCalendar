@@ -11,10 +11,9 @@ import com.google.android.gms.vision.text.TextBlock;
 
 import java.util.List;
 
-/**
- * Graphic instance for rendering TextBlock position, size, and ID within an associated graphic
- * overlay view.
- */
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
 public class OcrGraphic extends GraphicOverlay.Graphic {
 
     private int mId;

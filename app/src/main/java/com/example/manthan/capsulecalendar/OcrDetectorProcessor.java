@@ -6,10 +6,9 @@ import com.example.manthan.capsulecalendar.ui.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 
-/**
- * A very simple Processor which receives detected TextBlocks and adds them to the overlay
- * as OcrGraphics.
- */
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
 public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 
     private GraphicOverlay<OcrGraphic> mGraphicOverlay;
