@@ -5,34 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.manthan.capsulecalendar.MainActivity">
-
+    tools:context="com.example.manthan.capsulecalendar.MainActivity"
+    android:background="@drawable/pillbottle">
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="210dp"
+        android:layout_marginLeft="75dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:text="Capsule Calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
     <Button
         android:id="@+id/signInButton"
-        android:layout_width="250dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:textSize="20dp"
-        android:layout_marginBottom="129dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginStart="148dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginLeft="40dp"
         android:backgroundTint="#FFE400"
         android:text="Sign In"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="360dp"
-        android:layout_height="258dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="46dp"
-        app:layout_constraintBottom_toTopOf="@+id/signInButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/imageedit_1_8862782962" />
+
 
 </android.support.constraint.ConstraintLayout>
