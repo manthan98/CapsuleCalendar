@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.manthan.capsulecalendar.confirmation"
-    android:background="#f5f5dc">
+    tools:context="com.example.manthan.capsulecalendar.confirmation">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="26dp"
+        android:textStyle="bold"
         android:id="@+id/medicationText"
+        android:layout_centerHorizontal="true"
+        android:text="Your Medication Label"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"/>
 
     <TextView
@@ -23,7 +26,7 @@
         android:id="@+id/perDoseLabel"
         android:layout_marginBottom="40dp"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/medicationText"
         android:layout_toRightOf="@id/perDoseLabel"
@@ -38,7 +41,7 @@
         android:id="@+id/perDayLabel"
         android:layout_marginBottom="40dp"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/perDoseLabel"
         android:layout_toRightOf="@id/perDayLabel"
@@ -51,10 +54,10 @@
         android:text="Medication name:"
         android:id="@+id/medicineLabel" />
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/perDayLabel"
-        android:layout_toRightOf="@id/perDayLabel"
+        android:layout_toRightOf="@id/medicineLabel"
         android:id="@+id/medicineName" />
 
     <Button
