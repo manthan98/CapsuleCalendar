@@ -25,6 +25,7 @@ public class confirmation extends AppCompatActivity {
     private  static String DAYS_REPEAT = "0";
     private  static String NUM_PILLS = "0";
     private static String medName = "";
+    private static int quantity = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,9 @@ public class confirmation extends AppCompatActivity {
         setContentView(R.layout.activity_confirmation);
 
         String text = getIntent().getStringExtra("MedicationText");
-        String text2 = text.trim().replaceAll("\\s{2,}", " ");
-        String formattedText = text2.replaceAll("\\.", "");
+        String text2 = text.replaceAll(":", " ");
+        text2 = text2.replaceAll("\\.", "");
+        String formattedText = text2.trim().replaceAll("\\s{2,}", " ");
 
         Log.d(TAG, formattedText);
         String[] words = formattedText.split("\\s+");
@@ -66,11 +68,25 @@ public class confirmation extends AppCompatActivity {
             }
         }
 
-        String med = "";
+        String med = "Didn't find your medication name";
         int indexMG = Arrays.asList(words).indexOf("MG");
         if (indexMG != -1) {
             medName = " of " + words[indexMG - 2];
             med = words[indexMG - 2];
+        }
+        else{
+            indexMG = Arrays.asList(words).indexOf("25MG");
+            if(indexMG != 1){
+                medName = " of " + words[indexMG - 2];
+                med = words[indexMG - 2];
+            }
+        }
+
+        String qty = "Could not find quantity";
+        int indexQTY = Arrays.asList(words).indexOf("Qty");
+        if(indexQTY != -1){
+            qty = words[indexQTY + 1];
+            quantity = Integer.parseInt(qty);
         }
 
     /*
@@ -97,6 +113,9 @@ public class confirmation extends AppCompatActivity {
         EditText medicineName = (EditText) findViewById(R.id.medicineName);
         medicineName.setText(med, TextView.BufferType.EDITABLE);
 
+        EditText quantityField = (EditText) findViewById(R.id.quantity);
+        quantityField.setText(qty, TextView.BufferType.EDITABLE);
+
         if(perDosage.equals("ONE")||perDosage.equals("1")){
             PER_DOSAGE = 1;
         }
@@ -118,7 +137,7 @@ public class confirmation extends AppCompatActivity {
 
         NUM_PILLS = perDosage;
 
-        int count = 30/(PER_DOSAGE);
+        int count = quantity/(PER_DOSAGE);
         DAYS_REPEAT = String.valueOf(count);
     }
 
@@ -149,7 +168,7 @@ public class confirmation extends AppCompatActivity {
                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME , beginMilli)
                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME ,endMilli)
                    .putExtra(Events.TITLE, "Medications reminder")
-                   .putExtra(Events.RRULE,RRULE)
+                   .putExtra(Events.RRULE, RRULE)
                    .putExtra(Events.DESCRIPTION, desc)
                    .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
            startActivity(intent);
@@ -159,7 +178,7 @@ public class confirmation extends AppCompatActivity {
            Intent intent = new Intent(Intent.ACTION_INSERT)
                    .setData(Events.CONTENT_URI)
                    .putExtra(Events.TITLE, "Medications reminder")
-                   .putExtra(Events.RRULE,RRULE)
+                   .putExtra(Events.RRULE, RRULE)
                    .putExtra(Events.DESCRIPTION, desc)
                    .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
            startActivity(intent);
@@ -169,7 +188,7 @@ public class confirmation extends AppCompatActivity {
            Intent intent = new Intent(Intent.ACTION_INSERT)
                    .setData(Events.CONTENT_URI)
                    .putExtra(Events.TITLE, "Medications reminder")
-                   .putExtra(Events.RRULE,RRULE)
+                   .putExtra(Events.RRULE, RRULE)
                    .putExtra(Events.DESCRIPTION, desc)
                    .putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
            startActivity(intent);

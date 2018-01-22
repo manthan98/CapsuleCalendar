@@ -45,20 +45,36 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/perDoseLabel"
         android:layout_toRightOf="@id/perDayLabel"
-        android:id="@+id/perDay" />
+        android:id="@+id/perDay"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="26dp"
         android:layout_below="@id/perDayLabel"
         android:text="Medication name:"
-        android:id="@+id/medicineLabel" />
+        android:id="@+id/medicineLabel"
+        android:layout_marginBottom="40dp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/perDayLabel"
         android:layout_toRightOf="@id/medicineLabel"
-        android:id="@+id/medicineName" />
+        android:id="@+id/medicineName"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:layout_below="@id/medicineLabel"
+        android:text="Quantity:"
+        android:id="@+id/quantityLabel" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/medicineLabel"
+        android:layout_toRightOf="@id/quantityLabel"
+        android:id="@+id/quantity" />
 
     <Button
         android:id="@+id/camera_button"
